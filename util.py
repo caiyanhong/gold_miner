@@ -46,3 +46,19 @@ def str2int(x):
 
 def num2date(n):
     return date(int(n / 10000), int(n / 100 % 100), int(n % 100))
+
+
+# remove all empty columns
+def filter_all_nan_columns(df, specified_columns=None):
+    na_cols = df.isna().all()
+    cols = list()
+    for col in na_cols.index.values.tolist():
+        if specified_columns is not None:
+            if col in specified_columns:
+                continue
+
+        if not na_cols[col]:
+            cols.append(col)
+    # print(df[cols])
+    return df[cols]
+

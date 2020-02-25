@@ -7,7 +7,7 @@ if __name__ == '__main__':
     init_logging()
     db = GoldDb()
     ds.set_db(db)
-    print(db.query_all_stock_list())
+
     # db.test_database()
     # ds.update_all_stock_daily()
     # ds.delete_old_index_price()

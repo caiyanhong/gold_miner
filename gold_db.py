@@ -96,6 +96,12 @@ class GoldDb:
 
         return pandas.read_sql(sql, self.con)
 
+    def select_by_sid(self, table, sid, condition=None):
+        if condition is not None:
+            return self.select(table, field=None, condition="sid='%s' and " % sid + condition)
+        else:
+            return self.select(table, field=None, condition="sid='%s'" % sid)
+
     def insert_data_frame(self, table, df):
         tuples = list(df.itertuples(index=False, name=None))
         columns_list = df.columns.tolist()
@@ -340,9 +346,11 @@ class GoldDb:
         # print(index_weights)
         return index_weights
 
-    def query_statement(self, sid, table):
 
-        pass
+    def query_statement(self, sid, table, filter_columns='sid'):
+        df = self.select_by_sid(table, sid)
+        return filter_all_nan_columns(df, filter_columns)
+
 
 
 def convert_statement_date():
